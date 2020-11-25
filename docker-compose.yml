@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  post:
+    tty: true
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    working_dir: /go/src
+    ports:
+      - "9002:9002"
+    volumes:
+      - ./golang:/go/src
