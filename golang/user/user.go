@@ -1,53 +1,47 @@
 package user
 
-import {
+import (
 	"errors"
-}
+)
 
-type User{
+type User struct{
 	id UserId
 	name FullName
 }
 
-func NewUser(id UserId, name FullName) *User, error{
-	if id == nil {
-		return nil, erros.New("ユーザIDが存在しません")
-	}
-
-	if name == nil {
-		return nil, erros.New("名前が存在しません")
-	}
-
-	return *User{id, name}, nil
+func NewUser(id UserId, name FullName) (User, error) {
+	return User{id, name}, nil
 }
 
-type FullName{
+type FullName struct{
 	firstName string
 	lastName string
 }
 
-type UserId{
+func NewFullName(firstName string, lastName string) (FullName, error) {
+	if len(firstName) >= 3 {
+		return FullName{}, errors.New("名前入力エラ〜")
+	}
+
+	if len(lastName) >= 3 {
+		return FullName{}, errors.New("名前入力エラ〜")
+	}
+
+	return FullName{firstName, lastName}, nil
+}
+
+
+type UserId struct{
 	value string
 }	
 
-func NewUserId(value string) *UserId, error{
+func NewUserId(value string) (UserId, error) {
 	if len(value) > 0 {
-		return nil, errors.New("ユーザーIDエラー")
+		return UserId{}, errors.New("ユーザーIDエラー")
 	}
 
-	return *UserId{value}, nil
+	return UserId{value}, nil
 }
 
-func NewFullName(firstName string, lastName string) *FullName, error{
-	if len(firstName) >= 3 {
-		return nil, errors.New("名前入力エラ〜")
-	}
-
-	if len(lastName) >= 3 == "" {
-		return nil, errors.New("名前入力エラ〜")
-	}
-
-	return &FullName{firstName, lastName}, nil
-}
 
 
