@@ -6,14 +6,20 @@ import (
 	"ddd/v1/user"
 )
 
-func TestNewUser(t *testing.T) {
-	userId, _ := user.NewUserId("1111")
-	fullName, _ := user.NewFullName("John", "Ader")
+func TestCreateUser(t *testing.T) {
+	user1, err := user.CreateUser("1111", "John", "Ader")
 
-	assert.Equal(t, "1111", userId.value, "The two words should be the same.")
+	if err != nil {
+		t.Fatalf("failed test %#v", err)
+	}
 
-	user1, _ := user.NewUser(userId, fullName)
+	assert.Equal(t, "1111", user1.GetUserId(), "The two words should be the same.")
+	assert.Equal(t, "John Ader", user1.GetFullName(), "The two words should be the same.")
 
-	assert.Equal(t, "1111", user1, "The two words should be the same.")
-	
+	err = user1.UpdateUser("Bob", "Gary")
+	if err != nil {
+		t.Fatalf("failed test %#v", err)
+	}
+
+	assert.Equal(t, "Bob Gary", user1.GetFullName(), "The two words should be the same.")
 }

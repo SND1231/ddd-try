@@ -11,3 +11,24 @@ services:
       - "9002:9002"
     volumes:
       - ./golang:/go/src
+    environment:
+      DB_USER: root
+      DB_PASSWORD: a1b2V4d
+      DB_NAME: ramen_app
+      DB_ADDRESS: db-post:3306
+    networks:
+      - app_network
+  db-post:
+    image: mysql:8.0
+    container_name: mysql-post-container
+    ports:
+      - 23306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: a1b2V4d
+      MYSQL_DATABASE: ramen_app
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    external: true
